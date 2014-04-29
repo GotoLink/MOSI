@@ -2,8 +2,9 @@ package armorbarmod.common;
 
 import java.util.EnumSet;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 
 import org.lwjgl.util.Point;
 
@@ -39,28 +40,28 @@ public enum DisplayBuilder {
 	Arrow{
 		@Override
 		void createDisplayUnit() {
-			displayUnit = new DisplayUnitTrackItem(this.toString(), Item.arrow.itemID, true, 1030655,  new Point(119, (16+4)*0+20));
+			displayUnit = new DisplayUnitTrackItem(this.toString(), Items.arrow, true, 1030655,  new Point(119, (16+4)*0+20));
 			displayUnit.loadProfile(EnumSet.of(Setting.FlowRight, Setting.AnalogBar, Setting.DigitalCounter, Setting.DisplayWhenEmpty, Setting.trackAmount));
 		}
 	},
 	GenericDurabilityCounter1{
 		@Override
 		void createDisplayUnit() {
-			displayUnit = new DisplayUnitTrackItem(this.toString(), Item.swordWood.itemID, false, 1030655, new Point(-119-16, (16+4)*0+20));
+			displayUnit = new DisplayUnitTrackItem(this.toString(), Items.wooden_sword, false, 1030655, new Point(-119-16, (16+4)*0+20));
 			displayUnit.loadProfile(EnumSet.of(Setting.FlowLeft, Setting.AnalogBar, Setting.DisplayWhenEmpty, Setting.trackDurability));
 		}
 	},
 	GenericDurabilityCounter2{
 		@Override
 		void createDisplayUnit() {
-			displayUnit = new DisplayUnitTrackItem(this.toString(), Item.swordIron.itemID, false, 1030655, new Point(-119-16, (16+4)*1+20));
+			displayUnit = new DisplayUnitTrackItem(this.toString(), Items.iron_sword, false, 1030655, new Point(-119-16, (16+4)*1+20));
 			displayUnit.loadProfile(EnumSet.of(Setting.FlowLeft, Setting.AnalogBar, Setting.DisplayWhenEmpty, Setting.trackDurability));
 		}
 	},
 	GenericAmountCounter1{
 		@Override
 		void createDisplayUnit() {
-			displayUnit = new DisplayUnitTrackItem(this.toString(), Item.coal.itemID, false, 1030655, new Point(119, (16+4)*1+20));
+			displayUnit = new DisplayUnitTrackItem(this.toString(), Items.coal, false, 1030655, new Point(119, (16+4)*1+20));
 			displayUnit.loadProfile(EnumSet.of(Setting.FlowRight, Setting.AnalogBar, Setting.DigitalCounter, Setting.DisplayWhenEmpty, Setting.trackAmount, 
 					Setting.equalItemMeta));
 		}
@@ -68,7 +69,7 @@ public enum DisplayBuilder {
 	GenericAmountCounter2{
 		@Override
 		void createDisplayUnit() {
-			displayUnit = new DisplayUnitTrackItem(this.toString(), Item.diamond.itemID, false, 1030655, new Point(119, (16+4)*2+20));
+			displayUnit = new DisplayUnitTrackItem(this.toString(), Items.diamond, false, 1030655, new Point(119, (16+4)*2+20));
 			displayUnit.loadProfile(EnumSet.of(Setting.FlowRight, Setting.AnalogBar, Setting.DigitalCounter, Setting.DisplayWhenEmpty, Setting.trackAmount, 
 					Setting.equalItemMeta));
 		}

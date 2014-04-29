@@ -2,17 +2,18 @@ package armorbarmod.common;
 
 import java.util.EnumSet;
 
+import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraftforge.common.Configuration;
+import net.minecraft.util.IIcon;
+import net.minecraftforge.common.config.Configuration;
 
 import org.lwjgl.util.Point;
 
 public class DisplayUnitTrackItem extends DisplayUnitItem{
 	
-	int itemIDToTrack;
+	Item itemIDToTrack;
 	int itemDamageToTrack;
 	int analogUpperLimit = 64;
 	int updateFrequency = 10;
@@ -22,11 +23,11 @@ public class DisplayUnitTrackItem extends DisplayUnitItem{
 	
 	int trackedValue = 0;
 
-	public DisplayUnitTrackItem(String name, int itemIDToTrack, boolean shouldDisplay, int displayColor, Point displayOffset) {
+	public DisplayUnitTrackItem(String name, Item itemIDToTrack, boolean shouldDisplay, int displayColor, Point displayOffset) {
 		this(name, itemIDToTrack, 0, shouldDisplay, displayColor, displayOffset);
 	}
 	
-	public DisplayUnitTrackItem(String name, int itemIDToTrack, int itemDamageToTrack, boolean shouldDisplay,	int displayColor, Point displayOffset) {
+	public DisplayUnitTrackItem(String name, Item itemIDToTrack, int itemDamageToTrack, boolean shouldDisplay,	int displayColor, Point displayOffset) {
 		super(name, shouldDisplay, displayColor, displayOffset);
 		this.itemIDToTrack = itemIDToTrack;
 		this.itemDamageToTrack = itemDamageToTrack;
@@ -79,7 +80,7 @@ public class DisplayUnitTrackItem extends DisplayUnitItem{
 		/* Variable That will hold the Item we want to render */
 		//TODO: Commented
 		ItemStack itemStackToRender = findTrackableItem(mc);
-		Icon textureLocation = itemStackToRender.getItem().getIconIndex(itemStackToRender);
+		IIcon textureLocation = itemStackToRender.getItem().getIconIndex(itemStackToRender);
 		int analogMax = trackingTypeDurability ? itemStackToRender.getItem().getMaxDamage() : analogUpperLimit;
 		int scaledAmount = mapValueToScale(trackedValue, analogMax, 16);
 		renderSpecifics(mc, itemStackToRender,	textureLocation, scaledAmount, trackedValue);
@@ -88,12 +89,12 @@ public class DisplayUnitTrackItem extends DisplayUnitItem{
 	private ItemStack findTrackableItem(Minecraft mc){
 		ItemStack[] inventory = mc.thePlayer.inventory.mainInventory;
 		for (int i = 0; i < inventory.length; i++) {
-			if(inventory[i] != null && inventory[i].getItem().itemID == itemIDToTrack 
+			if(inventory[i] != null && inventory[i].getItem() == itemIDToTrack
 					&& (!shouldItemsHaveSameMeta || inventory[i].getItemDamage() == itemDamageToTrack)){
 				return inventory[i];
 			}
 		}
-		return trackingTypeDurability ? new ItemStack(itemIDToTrack, 1, Item.itemsList[itemIDToTrack].getMaxDamage()) : new ItemStack(itemIDToTrack, 1, itemDamageToTrack);
+		return trackingTypeDurability ? new ItemStack(itemIDToTrack, 1, itemIDToTrack.getMaxDamage()) : new ItemStack(itemIDToTrack, 1, itemDamageToTrack);
 	}
 	
 	@Override
@@ -126,7 +127,7 @@ public class DisplayUnitTrackItem extends DisplayUnitItem{
 	@Override
 	public void getFromConfig(Configuration config) {
 		super.getFromConfig(config);
-		itemIDToTrack = config.get("ArmorBar."+name, "ItemID To Track", itemIDToTrack, "ItemID of desired Item to track.").getInt(itemIDToTrack);
+		itemIDToTrack = GameData.getItemRegistry().getObject(config.get("ArmorBar."+name, "Item To Track", GameData.getItemRegistry().getNameForObject(itemIDToTrack), "Item name of desired Item to track.").getString());
 		itemDamageToTrack = config.get("ArmorBar."+name, "Item Damage To Track", itemDamageToTrack, "Damage of Item For Matching").getInt(itemDamageToTrack);
 		analogUpperLimit = config.get("ArmorBar."+name, "Analog Upper Limit", analogUpperLimit, "Represents Full Bar for the Analog Display Bar when tracking Quantity").getInt(analogUpperLimit);
 		updateFrequency = config.get("ArmorBar."+name, "Update Frequency", updateFrequency, "Controls how often this DisplayUnit will Update").getInt(updateFrequency);

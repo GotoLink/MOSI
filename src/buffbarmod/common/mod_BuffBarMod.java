@@ -1,66 +1,32 @@
 package buffbarmod.common;
 
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PostInit;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
+import net.minecraftforge.common.config.Property;
 
 @Mod(modid = "mod_BuffBarMod", name = "Buff Bar Mod", version = "0.7.1")
-@NetworkMod(clientSideRequired = true, serverSideRequired = false)
-
 public class mod_BuffBarMod {
-	
-	@Instance("mod_BuffBarMod")
-	public static mod_BuffBarMod modInstance;
-	
 	@SidedProxy(clientSide = "buffbarmod.client.ClientProxyBuffBarMod", serverSide = "buffbarmod.common.CommonProxyBuffBarMod")
 	public static CommonProxyBuffBarMod proxy;
+	public static final int[] DEFAULTS = {10, -28, 0, 1030655, 13, 60};
+    public static final String[] OPTIONS = {"Display X Offeset", "Display Y Offeset", "Display Type", "Display Font Color", "Display YOffSet in Creative", "Analog Max Duration Length"};
+	public static Property[] controls = new Property[OPTIONS.length];
 	
-	public static int xOffset = 10;
-	public static int yOffset = -28;
-	public static int displayType = 0;
-	public static int fontColor = 1030655;
-	public static int creativeYOffSet = 13;
-	public static int analogMaxDurationLength = 60;
-	
-	@PreInit
+	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		proxy.registerTickers();
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
-        config.load();
-        
-        xOffset = config.get("Buff Bar Controls", "Display X Offeset", xOffset).getInt(xOffset);
-        yOffset = config.get("Buff Bar Controls", "Display Y Offeset", yOffset).getInt(yOffset);
-        displayType = config.get("Buff Bar Controls", "Display Type", displayType).getInt(displayType);
-        fontColor = config.get("Buff Bar Controls", "Display Font Color", fontColor).getInt(fontColor);
-        creativeYOffSet = config.get("Buff Bar Controls", "Display YOffSet in Creative", creativeYOffSet).getInt(creativeYOffSet);
-        analogMaxDurationLength = config.get("Buff Bar Controls", "Analog Max Duration Length", analogMaxDurationLength).getInt(analogMaxDurationLength);
+        for(int i = 0; i< OPTIONS.length; i++)
+            controls[i] = config.get("Buff Bar Controls", OPTIONS[i], DEFAULTS[i]);
         
         config.save();
-
 	}
 	
-	@Init
+	@Mod.EventHandler
 	public void load(FMLInitializationEvent event) {
 		proxy.registerRenderThings();
 	}
-	
-	@PostInit
-	public void postInit(FMLPostInitializationEvent event) {
-
-		
-	}
-
-	public mod_BuffBarMod(){
-		
-	}
-
-
 }

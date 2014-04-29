@@ -5,7 +5,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -32,7 +32,7 @@ public abstract class DisplayUnitItem extends DisplayUnit {
      * @param analogAmount The scaled value for the analog counter
      * @param counterAmount The scaled value for the digital counter
      */
-    protected void renderSpecifics(Minecraft mc, ItemStack itemStackToRender, Icon textureLocation, int analogAmount,
+    protected void renderSpecifics(Minecraft mc, ItemStack itemStackToRender, IIcon textureLocation, int analogAmount,
             int counterAmount) {
         ScaledResolution scaledResolition = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         Point centerOfDisplay = new Point(scaledResolition.getScaledWidth() / 2 + displayOffset.getX(),
@@ -90,10 +90,7 @@ public abstract class DisplayUnitItem extends DisplayUnit {
      * Used to Draw Analog Bar.
      * 
      * @param mc The Minecraft Instance
-     * @param fontRenderer The fontRenderer
      * @param centerOfDisplay The Center Position where the bar is offset From.
-     * @param analogValue The value representing how full the Bar is
-     * @param analogMax The value that represents the width of the full bar.
      */
     protected void renderCounterBar(Minecraft mc, Point centerOfDisplay, int counterAmount) {
 

@@ -3,10 +3,10 @@ package armorbarmod.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
-import net.minecraftforge.event.ForgeSubscribe;
 
 public class MOSIDisplayTicker {
     public static int inGameTicks = 0;
@@ -17,11 +17,13 @@ public class MOSIDisplayTicker {
     public static void addDisplay(DisplayUnit displayUnit) {
         displayList.add(displayUnit);
     }
-
-    @ForgeSubscribe
+    private final Minecraft mc;
+    public MOSIDisplayTicker(){
+        mc = Minecraft.getMinecraft();
+    }
+    @SubscribeEvent
     public void onRender(Post event) {
-        if (event.type != null && event.type == ElementType.HOTBAR) {
-            Minecraft mc = Minecraft.getMinecraft();
+        if (event.type == ElementType.HOTBAR) {
             for (DisplayUnit displayUnit : displayList) {
                 displayUnit.onUpdate(mc, inGameTicks);
                 if (displayUnit.shouldRender(mc)) {

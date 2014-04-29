@@ -4,8 +4,8 @@ import java.util.EnumSet;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.util.Icon;
-import net.minecraftforge.common.Configuration;
+import net.minecraft.util.IIcon;
+import net.minecraftforge.common.config.Configuration;
 
 import org.lwjgl.util.Point;
 
@@ -58,7 +58,6 @@ public abstract class DisplayUnit {
 	
 	/**
 	 * Used to Set default values in accordance to a certain type
-	 * @param profile
 	 */	
 	public void loadProfile(EnumSet<Setting> defaultSettings){
 		for (Setting setting : defaultSettings) {
@@ -118,7 +117,7 @@ public abstract class DisplayUnit {
 		var9.draw();        	
 	}
 	
-	protected void drawTextureModelFromIcon(Icon icon, Point screenPosition){
+	protected void drawTextureModelFromIcon(IIcon icon, Point screenPosition){
         final float var13 = icon.getMinU();
         final float var15 = icon.getMaxU();
         final float var17 = icon.getMinV();

@@ -2,8 +2,8 @@ package armorbarmod.common;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraftforge.common.Configuration;
+import net.minecraft.util.IIcon;
+import net.minecraftforge.common.config.Configuration;
 
 import org.lwjgl.util.Point;
 
@@ -49,7 +49,7 @@ public class DisplayUnitArmorSlot extends DisplayUnitItem{
 	public void renderDisplay(Minecraft mc) {		
 		/* Get Itemstack to Render */
 		ItemStack itemStackToRender = mc.thePlayer.inventory.armorInventory[armorSlot];
-		Icon textureLocation = itemStackToRender.getItem().getIconIndex(itemStackToRender);
+		IIcon textureLocation = itemStackToRender.getItem().getIconIndex(itemStackToRender);
 		
 		/* Get Damage of Itemstack */
 		int maxDamage = itemStackToRender.getItem().getMaxDamage();
