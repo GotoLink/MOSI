@@ -34,7 +34,7 @@ public abstract class DisplayUnitItem extends DisplayUnit {
      */
     protected void renderSpecifics(Minecraft mc, ItemStack itemStackToRender, IIcon textureLocation, int analogAmount,
             int counterAmount) {
-        ScaledResolution scaledResolition = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+        ScaledResolution scaledResolition = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
         Point centerOfDisplay = new Point(scaledResolition.getScaledWidth() / 2 + displayOffset.getX(),
                 scaledResolition.getScaledHeight() - displayOffset.getY());
 

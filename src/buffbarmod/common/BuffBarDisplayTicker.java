@@ -54,7 +54,7 @@ public class BuffBarDisplayTicker{
             if(renderEngine==null){
                 renderEngine = mc.renderEngine;
             }
-			ScaledResolution var3 = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+			ScaledResolution var3 = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 
 			int scalewidth = var3.getScaledWidth();
 			int scaleHeight = var3.getScaledHeight();
